@@ -1,10 +1,11 @@
 """"""
 
-class Pieces():
+class Piece():
     def __init__(self, x, y, type, team):
         self.__coords = (x, y)
         self.type = type
         self.team = team
+        self.pv = 1
 
 
     @property
@@ -28,11 +29,11 @@ class Pieces():
         self.__coords = (xn, yn)
 
 
-
     def id(self):
-        return 'P'
+        return 'Piece'
 
     def move(self):
+        #TODO : lier les mouvements possibles aux cartes dans la main du joueur
         print("Choisissez votre mouvement :")
         print("avant, arrière, gauche, droite ?")
         move = input()
@@ -60,3 +61,13 @@ class Pieces():
                 self.coords = (self.x, self.y -1)
             elif self.team == "black":
                 self.coords = (self.x, self.y +1)
+
+
+
+class Roi(Piece):
+    def id(self):
+        return 'Roi'
+
+class Pion(Piece):
+    def id(self):
+        return 'Pion'
