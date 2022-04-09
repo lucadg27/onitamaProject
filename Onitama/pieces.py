@@ -85,7 +85,7 @@ class Piece():
 
 
 class Roi(Piece):
-    #TODO : ajouter une fonction move qui vérifie si les Rois n'ont pas atteind l'autel adverse
+    #Vérifier que la fonction est similaire à celle générale, sauf pour les deux derniers blocs
     def __init__(self, x, y, team, table):
         super().__init__(x, y, team, table)
         self.ptype = "Roi"
