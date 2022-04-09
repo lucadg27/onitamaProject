@@ -47,8 +47,8 @@ class Piece():
         #TODO : lier les mouvements possibles aux cartes dans la main du joueur
         #TODO : s'assurer de ne pas sortir du plateau (contrainte dans le coord setter insuffisante)
         #TODO : s'assurer que deux pièces ne se chevauchent pas AVANT de bouger
-        print("Choisissez votre mouvement :", '\n')
-        print("haut, bas, gauche, droite  - relatif au plateau")
+        print("Choisissez votre mouvement :")
+        print("haut, bas, gauche, droite (relatif au plateau)", "\n")
         move = input()
 
         if move == 'haut':
@@ -62,6 +62,7 @@ class Piece():
         for piece in self.table:
             if piece.team != self.team and piece.coords == self.coords:
                 piece.kill()
+
 
     def car(self):
         return "0"
@@ -90,10 +91,36 @@ class Roi(Piece):
             print("Le Roi Rouge est mort : le joueur Bleu a gagné !")
 
 
+    def move(self):
+        print("Choisissez votre mouvement :")
+        print("haut, bas, gauche, droite (relatif au plateau)", "\n")
+        move = input()
+
+        if move == 'haut':
+            self.coords = (self.x -1, self.y)
+        elif move == 'bas':
+            self.coords = (self.x +1, self.y)
+        elif move == 'droite':
+            self.coords = (self.x, self.y +1)
+        elif move == 'gauche':
+            self.coords = (self.x, self.y -1)
+
+        if self.team == "B" and self.coords == (0, 2):
+            self.table.phase = "B won"
+            print("Le Roi Bleu a atteint l'autel Rouge : le joueur Bleu gagne !")
+
+        elif self.team == "C" and self.coords == (4, 2):
+            self.table.phase = "R won"
+            print("Le Roi Rouge a atteint l'autel Bleu : le joueur Rouge gagne !")
+
+        for piece in self.table:
+            if piece.team != self.team and piece.coords == self.coords:
+                piece.kill()
+
 class Pion(Piece):
     def __init__(self, x, y, team, table):
         super().__init__(x, y, team, table)
-        self.ptypee = "Pion"
+        self.ptype = "Pion"
 
     def car(self):
         return "P"

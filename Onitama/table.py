@@ -61,8 +61,8 @@ class Table(list):
         #TODO : changement de carte
         #TODO : différencier le tour des deux équipes (IA ? PVP ?)
 
-        print("Quelle pièce jouer ?", '\n')
-        print("Entrer coordonnées ; type matrice : (ligne, colonne)")
+        print("Quelle pièce jouer ?")
+        print("Entrer coordonnées (type matrice)")
         i = int(input())
         j = int(input())
         coo = (i, j)
@@ -70,6 +70,7 @@ class Table(list):
         check = False
         for piece in self:
             if piece.coords == coo:
+                print("Bougez le", piece.ptype, "en", coo)
                 piece.move()
                 check = True
                 #TODO : ajouter une erreur si aucune pièce n'est trouvée (ou si deux se chevauchent)
@@ -77,7 +78,6 @@ class Table(list):
             print("erreur : pas de pièce trouvée")
 
         table.clean()
-
         print(table)
 
     def clean(self):
@@ -89,8 +89,8 @@ class Table(list):
 if __name__ == "__main__":
     table = Table()
     team = "B"
-    print("Vous jouez les ", team, '\n')
-    print("Vos pions sont en bas du plateau")
+    print("Vous jouez les", team)
+    print("Vos pions sont en bas du plateau :", '\n')
 
     print(table)
 
