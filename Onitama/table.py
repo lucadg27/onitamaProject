@@ -56,7 +56,6 @@ class Table(list):
             s += "\n"
         return s
 
-
     def unRound(self, mode, team):
         """
         """
@@ -76,7 +75,6 @@ class Table(list):
             elif team == "Rouge" :
                 if self.last_played == "Rouge" : self.coup_IA("Bleu")
                 elif self.last_played == "Bleu" : self.coup("Rouge")
-
 
     def coup(self, joueur):
         print("Au tour des", joueur)
