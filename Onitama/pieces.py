@@ -43,25 +43,35 @@ class Piece():
     def id(self):
         return 'Piece'
 
-    def move(self):
+
+    def move(self, move):
         #TODO : lier les mouvements possibles aux cartes dans la main du joueur
-        #TODO : s'assurer de ne pas sortir du plateau (contrainte dans le coord setter insuffisante)
-        #TODO : s'assurer que deux pièces ne se chevauchent pas AVANT de bouger
-        print("Choisissez votre mouvement :")
-        print("haut, bas, gauche, droite (relatif au plateau)", "\n")
-        move = input()
+
+        dx, dy = 0, 0
 
         if move == 'haut':
-            self.coords = (self.x -1, self.y)
+            dx -= 1
         elif move == 'bas':
-            self.coords = (self.x +1, self.y)
+            dx += 1
         elif move == 'droite':
-            self.coords = (self.x, self.y +1)
+            dy += 1
         elif move == 'gauche':
-            self.coords = (self.x, self.y -1)
+            dy -= 1
+
         for piece in self.table:
-            if piece.team != self.team and piece.coords == self.coords:
-                piece.kill()
+            if piece.coords == (self.x + dx, self.y + dy):
+                if piece.team == self.team:
+                    dx, dy = 0, 0
+                    print("Erreur : vous tentez de vous déplacer sur une case déjà occupée par une de vos pièces !")
+                    break
+                else:
+                    piece.kill()
+
+        #Pas terrible de bouger après avoir tué une pièce potentiellement mangée. Mais plus compact...
+        self.coords = (self.x + dx, self.y + dy)
+
+
+
 
 
     def car(self):
@@ -70,9 +80,12 @@ class Piece():
     def kill(self):
         self.pv = 0
 
+    def autel_check(self):
+        ...
 
 
 class Roi(Piece):
+    #TODO : ajouter une fonction move qui vérifie si les Rois n'ont pas atteind l'autel adverse
     def __init__(self, x, y, team, table):
         super().__init__(x, y, team, table)
         self.ptype = "Roi"
@@ -82,40 +95,50 @@ class Roi(Piece):
 
     def kill(self):
         self.pv = 0
-        if self.team == "B":
+        if self.team == "Bleu":
             self.table.phase = "R won"
             print("Le Roi Bleu est mort : le joueur Rouge a gagné !")
 
-        elif self.team == "R":
+
+        elif self.team == "Rouge":
             self.table.phase = "B won"
             print("Le Roi Rouge est mort : le joueur Bleu a gagné !")
 
+    def move(self, move):
+        #TODO : lier les mouvements possibles aux cartes dans la main du joueur
 
-    def move(self):
-        print("Choisissez votre mouvement :")
-        print("haut, bas, gauche, droite (relatif au plateau)", "\n")
-        move = input()
+        dx, dy = 0, 0
 
         if move == 'haut':
-            self.coords = (self.x -1, self.y)
+            dx -= 1
         elif move == 'bas':
-            self.coords = (self.x +1, self.y)
+            dx += 1
         elif move == 'droite':
-            self.coords = (self.x, self.y +1)
+            dy += 1
         elif move == 'gauche':
-            self.coords = (self.x, self.y -1)
-
-        if self.team == "B" and self.coords == (0, 2):
-            self.table.phase = "B won"
-            print("Le Roi Bleu a atteint l'autel Rouge : le joueur Bleu gagne !")
-
-        elif self.team == "C" and self.coords == (4, 2):
-            self.table.phase = "R won"
-            print("Le Roi Rouge a atteint l'autel Bleu : le joueur Rouge gagne !")
+            dy -= 1
 
         for piece in self.table:
-            if piece.team != self.team and piece.coords == self.coords:
-                piece.kill()
+            if piece.coords == (self.x + dx, self.y + dy):
+                if piece.team == self.team:
+                    dx, dy = 0, 0
+                    print("Erreur : vous tentez de vous déplacer sur une case déjà occupée par une de vos pièces !")
+                    break
+                else:
+                    piece.kill()
+
+        #Pas terrible de bouger après avoir tué une pièce potentiellement mangée. Mais plus compact...
+        self.coords = (self.x + dx, self.y + dy)
+
+        if self.team == "Bleu" and self.coords == (0, 2):
+            self.table.phase = "Victoire des Bleus"
+            print("Le Roi Bleu a atteint l'Autel Rouge : le joueur Bleu gagne !")
+
+        elif self.team == "Rouge" and self.coords == (4, 2):
+            self.table.phase = "Victoire des Rouges"
+            print("Le Roi Rouge a atteint l'Autel Bleu : le joueur Rouge gagne !")
+
+
 
 class Pion(Piece):
     def __init__(self, x, y, team, table):
