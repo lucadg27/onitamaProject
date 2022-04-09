@@ -114,6 +114,7 @@ class Table(list):
 
         n, k = randint(0, len(pieces)), randint(0, len(mouvements))
         piece_IA, move_IA = pieces[n], mouvements[k]
+
         print("HAL9000 joue le", piece_IA.ptype, "en", piece_IA.coords)
         print("Mouvement choisi :", move_IA)
 
