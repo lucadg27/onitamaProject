@@ -12,6 +12,7 @@ from pieces import Roi, Pion
 """
 
 
+
 class Table(list):
     """
     """

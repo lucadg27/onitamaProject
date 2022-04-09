@@ -71,9 +71,6 @@ class Piece():
         self.coords = (self.x + dx, self.y + dy)
 
 
-
-
-
     def car(self):
         return "0"
 
