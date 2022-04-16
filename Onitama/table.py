@@ -9,12 +9,13 @@ import matplotlib.pyplot as plt
 from pieces import Roi, Pion
 
 """
+Ce module contient la définition de la classe principale servant à gérer le jeu. Cette classe représente la table de jeu (notamment le plateau)
 """
-
 
 
 class Table(list):
     """
+    Cette classe définit la table de jeu
     """
 
     def __init__(self):
@@ -37,12 +38,13 @@ class Table(list):
         self.last_played = "Rouge"
 
 
-    def case(self, x, y):
-        return self.__plateau[x][y]
-
     def __str__(self):
         """
+        Affiche le plateau de jeu sous forme de tableau.
+        Les pièces sont réprésentées par une lettre (R pour les Rois, P pour les Pions.
+        Les cases vides sont représentées par un point.
         """
+
         pos = {}
         for piece in self:
             pos[piece.coords] = piece.car()
@@ -56,8 +58,12 @@ class Table(list):
             s += "\n"
         return s
 
+
     def unRound(self, mode, team):
         """
+        Effectue les actions à mener lors d'un tour de jeu.
+        Les deux joueurs ont droit à une action, l'un après l'autre.
+        L'ordre de jeu dépend de l'avancement de la partie.
         """
         #TODO : ajouter un choix de carte
         #TODO : changement de carte
@@ -77,7 +83,11 @@ class Table(list):
                 elif self.last_played == "Bleu" : self.coup("Rouge")
 
     def coup(self, joueur):
-        print("Au tour des", joueur)
+        """
+        Effectue les actions d'un seul joueur pendant un tour.
+        """
+
+        print("Au tour du joueur", joueur)
         print("Joueur", joueur, "choisissez une pièce à jouer")
         print("Entrez les coordonnées de la pièce voulue (type matrice) : ")
         i = int(input())
@@ -101,6 +111,13 @@ class Table(list):
         self.last_played = joueur
 
     def coup_IA(self, team):
+        """
+        Permets de jouer contre l'ordinateur.
+        IA "naive" qui joue aléatoirement.
+        Peut essayer de jouer un coup impossible.
+        """
+        #TODO : apprendre à jouer à HAL9000. IL est vraiment mauvais...
+
         print("Au tour du joueur", team)
         print("*bip* *boup*")
         print("je suis un robot")
@@ -127,6 +144,10 @@ class Table(list):
 
 
     def clean(self):
+        """
+        Gère les pièces prises par l'adversaire pendant le tour.
+        """
+
         for piece in self:
             if piece.pv == 0:
                 self.remove(piece)

@@ -1,7 +1,15 @@
-""""""
+
 
 class Piece():
+    """
+    Cette classe gère les Pièces jouées pendant la partie.
+    Deux sous-classes différencient les Rois et les Pions.
+    """
+
     def __init__(self, x, y, team, table):
+        """
+        Génère une pièce d'une équipe donnée, à un emplacement donné sur le plateau.
+        """
         self.__coords = (x, y)
         self.team = team
         self.pv = 1
@@ -45,6 +53,12 @@ class Piece():
 
 
     def move(self, move):
+        """
+        Gère les mouvements possibles des pièces.
+        Sur cette version, le jeu n'autorise que des mouvements simples (une pièce ne peut se déplacer que sur un case adjacente).
+        Une pièce ne peut pas se déplacer sur une case occupée par une pièce alliée.
+        Si une pièce se déplace sur une case occupée par une pièce adverse, elle mange cette pièce.
+        """
         #TODO : lier les mouvements possibles aux cartes dans la main du joueur
 
         dx, dy = 0, 0
@@ -75,9 +89,15 @@ class Piece():
         return "0"
 
     def kill(self):
+        """
+        Permets à une pièce de se faire manger
+        """
         self.pv = 0
 
     def autel_check(self):
+        """
+        Fonction vide, définie uniquement pour les pièces de type Roi
+        """
         ...
 
 
@@ -91,17 +111,24 @@ class Roi(Piece):
         return "R"
 
     def kill(self):
+        """
+        Permets à un Roi de se faire manger.
+        La particularité d'un Roi est que si il est mangé, le joueur adverse remporte la partie.
+        """
         self.pv = 0
         if self.team == "Bleu":
             self.table.phase = "R won"
             print("Le Roi Bleu est mort : le joueur Rouge a gagné !")
-
 
         elif self.team == "Rouge":
             self.table.phase = "B won"
             print("Le Roi Rouge est mort : le joueur Bleu a gagné !")
 
     def move(self, move):
+        """
+        Gère les mouvements des pièces.
+        Particularité du Roi : si il atteint l'autel adverse (case de laquelle commence le Roi adverse), la partie est gagnée.
+        """
         #TODO : lier les mouvements possibles aux cartes dans la main du joueur
 
         dx, dy = 0, 0
