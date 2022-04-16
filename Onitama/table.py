@@ -82,6 +82,7 @@ class Table(list):
                 if self.last_played == "Rouge" : self.coup_IA("Bleu")
                 elif self.last_played == "Bleu" : self.coup("Rouge")
 
+
     def coup(self, joueur):
         """
         Effectue les actions d'un seul joueur pendant un tour.
@@ -109,6 +110,7 @@ class Table(list):
         print(table)
 
         self.last_played = joueur
+
 
     def coup_IA(self, team):
         """
@@ -151,6 +153,7 @@ class Table(list):
         for piece in self:
             if piece.pv == 0:
                 self.remove(piece)
+
 
 
 if __name__ == "__main__":

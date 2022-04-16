@@ -15,6 +15,7 @@ class Piece():
         self.pv = 1
         self.table = table
 
+
     @property
     def coords(self):
         return self.__coords
@@ -51,7 +52,6 @@ class Piece():
     def id(self):
         return 'Piece'
 
-
     def move(self, move):
         """
         Gère les mouvements possibles des pièces.
@@ -84,7 +84,6 @@ class Piece():
         #Pas terrible de bouger après avoir tué une pièce potentiellement mangée. Mais plus compact...
         self.coords = (self.x + dx, self.y + dy)
 
-
     def car(self):
         return "0"
 
@@ -93,12 +92,6 @@ class Piece():
         Permets à une pièce de se faire manger
         """
         self.pv = 0
-
-    def autel_check(self):
-        """
-        Fonction vide, définie uniquement pour les pièces de type Roi
-        """
-        ...
 
 
 class Roi(Piece):
