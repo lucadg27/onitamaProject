@@ -60,7 +60,7 @@ class Table(list):
         return s
 
 
-    def unRound(self, mode):
+    def unRound(self, mode, team):
         """
         Effectue les actions à mener lors d'un tour de jeu.
         Les deux joueurs ont droit à une action, l'un après l'autre.
@@ -84,13 +84,13 @@ class Table(list):
                 elif self.last_played == "Bleu" : self.coup("Rouge")
 
 
-    def coup(self, team):
+    def coup(self, joueur):
         """
-        Effectue les actions d'un joueur pendant un tour.
+        Effectue les actions d'un seul joueur pendant un tour.
         """
 
-        print("Au tour du joueur", team)
-        print("Joueur", team, "choisissez une pièce à jouer")
+        print("Au tour du joueur", joueur)
+        print("Joueur", joueur, "choisissez une pièce à jouer")
         print("Entrez les coordonnées de la pièce voulue (type matrice) : ")
         i = int(input())
         j = int(input())
@@ -98,13 +98,12 @@ class Table(list):
 
         check = False
         for piece in self:
-            if piece.team == team and piece.coords == coo:
+            if piece.team == joueur and piece.coords == coo:
                 print("Vous jouez le", piece.ptype, "en", coo)
                 print("Choisissez votre carte :")
                 print("gauche, droite (relatif au plateau)", "\n")
                 choix_carte = input()
                 carte_choisie=None
-
                 if piece.team=='Bleu' and choix_carte=='gauche':
                     carte_choisie=main_bleue[0]                       #On détermine la carte choisie
                     main_bleue[0],pioche[0]=pioche[0],main_bleue[0]   #On fait l'échange main, pioche.
@@ -118,7 +117,7 @@ class Table(list):
                     carte_choisie=main_rouge[1]
                     main_rouge[1], pioche[0] = pioche[0], main_rouge[1]
 
-                mouv_possibles = carte_choisie.mouv_possible            #On récupère tous les mouvements possibles
+                mouv_possibles=carte_choisie.mouv_possible            #On récupère tous les mouvements possibles
 
                 print('Vous pouvez aller aux coordonnees suivantes : ')
                 for i in range (len(mouv_possibles)) :
@@ -135,7 +134,7 @@ class Table(list):
         table.clean()
         print(table)
 
-        self.last_played = team
+        self.last_played = joueur
 
 
     def coup_IA(self, team):
@@ -223,7 +222,7 @@ class Pioche(list):
 
     def __init__(self,team,num_carte):
 
-        self.team = team
+        self.team=team
         self.num_carte=num_carte
         self.append(ca.Carte(self.num_carte,self.team,self))
 
@@ -263,4 +262,4 @@ if __name__ == "__main__":
     print('main bleue : ', main_bleue.affichage())
 
     while table.phase == "playing":
-        table.unRound(mode)
+        table.unRound(mode, team)
