@@ -1,0 +1,21 @@
+<RCC>
+  <qresource prefix="images">
+    <file>Sans titre.jpg</file>
+    <file>boar.jpg</file>
+    <file>cobra.jpg</file>
+    <file>crab.jpg</file>
+    <file>crane.jpg</file>
+    <file>dragon.jpg</file>
+    <file>eel.jpg</file>
+    <file>elephant.jpg</file>
+    <file>frog.jpg</file>
+    <file>goose.jpg</file>
+    <file>horse.jpg</file>
+    <file>mantis.jpg</file>
+    <file>monkey.jpg</file>
+    <file>ox.jpg</file>
+    <file>rabbit.jpg</file>
+    <file>rooster.jpg</file>
+    <file>tiger.jpg</file>
+  </qresource>
+</RCC>
